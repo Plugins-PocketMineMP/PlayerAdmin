@@ -12,7 +12,7 @@ Feature
 
 |command|description|
 |---|---|
-|/playeradmin|PlayerAdmin's main command.
+|/playeradmin|PlayerAdmin's main command.|
 
 ## Pictures
 
