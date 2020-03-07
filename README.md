@@ -16,9 +16,9 @@ Feature
 
 ## Pictures
 
-![](https://github.com/alvin0319/PlayerAdmin/tree/master/images/1.png?raw=true)
-![](https://github.com/alvin0319/PlayerAdmin/tree/master/images/2.png?raw=true)
-![](https://github.com/alvin0319/PlayerAdmin/tree/master/images/3.png?raw=true)
-![](https://github.com/alvin0319/PlayerAdmin/tree/master/images/4.png?raw=true)
-![](https://github.com/alvin0319/PlayerAdmin/tree/master/images/5.png?raw=true)
-![](https://github.com/alvin0319/PlayerAdmin/tree/master/images/6.png?raw=true)
+![](https://raw.githubusercontent.com/alvin0319/PlayerAdmin/master/images/1.PNG)
+![](https://raw.githubusercontent.com/alvin0319/PlayerAdmin/master/images/2.PNG)
+![](https://raw.githubusercontent.com/alvin0319/PlayerAdmin/master/images/3.PNG)
+![](https://raw.githubusercontent.com/alvin0319/PlayerAdmin/master/images/4.PNG)
+![](https://raw.githubusercontent.com/alvin0319/PlayerAdmin/master/images/5.PNG)
+![](https://raw.githubusercontent.com/alvin0319/PlayerAdmin/master/images/6.PNG)
