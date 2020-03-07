@@ -5,4 +5,5 @@ branches:
 projects:
   PlayerAdmin:
     path: ""
+    icon: icon.png
 ...
