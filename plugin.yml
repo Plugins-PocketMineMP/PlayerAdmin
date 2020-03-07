@@ -1,0 +1,15 @@
+name: PlayerAdmin
+author: alvin0319
+main: alvin0319\PlayerAdmin\PlayerAdmin
+version: 1.0.0
+api: 3.0.0
+
+commands:
+  playeradmin:
+    description: PlayerAdmin command.
+    aliases: ["pa"]
+    permission: playeradmin.manage
+
+permissions:
+  playeradmin.manage:
+    default: op
