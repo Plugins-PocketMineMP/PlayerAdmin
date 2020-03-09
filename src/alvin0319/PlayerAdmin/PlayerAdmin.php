@@ -147,7 +147,7 @@ class PlayerAdmin extends PluginBase implements Listener, DeviceInfo{
 	public function checkBan(IPlayer $player) : void{
 		if(($player = $player->getPlayer()) instanceof Player){
 			if($this->getWarn($player) >= $this->database["warn"]["ban-count"]){
-				$player->kick("Banned by admin. Reason: warn exceeded.");
+				$player->kick("Banned by admin: warn exceeded.");
 			}
 		}
 	}
