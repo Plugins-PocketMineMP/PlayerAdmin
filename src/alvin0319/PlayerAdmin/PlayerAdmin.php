@@ -40,10 +40,8 @@ use pocketmine\utils\Config;
 
 class PlayerAdmin extends PluginBase implements Listener, DeviceInfo{
 
-	/** @var Config[] */
-	protected $config = [];
-
-	protected $database = [];
+	/** @var \SQLite3 */
+	protected $mysql;
 
 	protected $data = [];
 
@@ -61,44 +59,28 @@ class PlayerAdmin extends PluginBase implements Listener, DeviceInfo{
 
 	public function onEnable() : void{
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
-		$this->config["warn"] = new Config($this->getDataFolder() . "WarnData.yml", Config::YAML, [
-			"ban-count" => 5,
-			"player" => []
-		]);
-		$this->database["warn"] = $this->config["warn"]->getAll();
-		$this->config["player"] = new Config($this->getDataFolder() . "PlayerData.yml", Config::YAML, []);
-		$this->database["player"] = $this->config["player"]->getAll();
+		$this->mysql = new \SQLite3($this->getDataFolder() . "PlayerAdmin.db");
+
+		$this->mysql->exec("CREATE TABLE IF NOT EXISTS database(player, warn)");
+		$res = $this->mysql->prepare("INSERT INTO database(warn) VALUE(:ban)");
+		$res->bindValue(":ban", ["ban" => []]);
+		$res->execute();
 	}
 
 	public function onDisable() : void{
-		$this->config["warn"]->setAll($this->database["warn"]);
-		$this->config["warn"]->save();
-		$this->config["player"]->setAll($this->database["player"]);
-		$this->config["player"]->save();
-	}
-
-	public function getWarnConfig() : Config{
-		return $this->config["warn"];
-	}
-
-	public function getPlayerConfig() : Config{
-		return $this->config["player"];
-	}
-
-	public function getWarnData() : array{
-		return $this->database["warn"];
-	}
-
-	public function getPlayerData() : array{
-		return $this->database["player"];
+		$this->mysql->close();
 	}
 
 	public function setWarnData(array $data) : void{
-		$this->database["warn"] = $data;
+		$res = $this->mysql->prepare("SELECT warn FROM database");
+		$data = [];
+		while($info = mysqli_fetch_array($res->result_metadata())){
+			$data[] = $info;
+		}
+		var_dump($data);
 	}
 
 	public function setPlayerData(array $data) : void{
-		$this->database["player"] = $data;
 	}
 
 	public function handleReceivePacket(DataPacketReceiveEvent $event){
@@ -113,6 +95,7 @@ class PlayerAdmin extends PluginBase implements Listener, DeviceInfo{
 	}
 
 	public function handlePlayerLogin(PlayerLoginEvent $event){
+		/*
 		$player = $event->getPlayer();
 		$this->updatePlayerInfo($player);
 
@@ -120,6 +103,7 @@ class PlayerAdmin extends PluginBase implements Listener, DeviceInfo{
 			$event->setKickMessage("You are banned.\n\nWarn count: " . $this->getWarn($player));
 			$event->setCancelled();
 		}
+		*/
 	}
 
 	public function updatePlayerInfo(Player $player) : void{
@@ -135,11 +119,14 @@ class PlayerAdmin extends PluginBase implements Listener, DeviceInfo{
 	}
 
 	public function getWarn(IPlayer $player) : int{
-		return $this->database["warn"]["player"][strtolower($player->getName())];
+		//return $this->database["warn"]["player"][strtolower($player->getName())];
+		return 0;
 	}
 
 	public function addWarn(IPlayer $player, int $count, string $reason = "") : void{
+		/*
 		$this->database["warn"]["player"][strtolower($player->getName())] += $count;
+		*/
 		$this->getServer()->broadcastMessage(PlayerAdmin::$prefix . "Player " . $player->getName() . " received warn {$count}. reason: " . ($reason === "" ? "Admin Discretion" : $reason));
 		$this->checkBan($player);
 	}
@@ -153,11 +140,12 @@ class PlayerAdmin extends PluginBase implements Listener, DeviceInfo{
 	}
 
 	public function reduceWarn(IPlayer $player, int $count) : void{
-		$this->database["warn"]["player"][strtolower($player->getName())] -= $count;
+		//$this->database["warn"]["player"][strtolower($player->getName())] -= $count;
 	}
 
 	public function getPlayerInfo(IPlayer $player) : ?array{
-		return isset($this->database["player"][strtolower($player->getName())]) ? $this->database["player"][strtolower($player->getName())] : null;
+		//return isset($this->database["player"][strtolower($player->getName())]) ? $this->database["player"][strtolower($player->getName())] : null;
+		return [];
 	}
 
 	public function hasPlayerInfo(IPlayer $player) : bool{
